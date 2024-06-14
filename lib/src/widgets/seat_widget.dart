@@ -1,14 +1,14 @@
 import 'package:book_my_seat/src/model/seat_model.dart';
-import 'package:book_my_seat/src/utils/seat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vive_models/vive_models.dart';
 
 class SeatWidget extends StatefulWidget {
   final SeatModel model;
-  final void Function(int rowI, int colI, SeatState currentState)
+  final void Function(int rowI, int colI, SeatAvailability currentSeat)
       onSeatStateChanged;
 
-  const SeatWidget({
+  SeatWidget({
     Key? key,
     required this.model,
     required this.onSeatStateChanged,
@@ -19,52 +19,26 @@ class SeatWidget extends StatefulWidget {
 }
 
 class _SeatWidgetState extends State<SeatWidget> {
-  SeatState? seatState;
   int rowI = 0;
   int colI = 0;
 
   @override
   void initState() {
     super.initState();
-    seatState = widget.model.seatState;
     rowI = widget.model.rowI;
     colI = widget.model.colI;
   }
 
   @override
   Widget build(BuildContext context) {
-    final safeCheckedSeatState = seatState;
-    if (safeCheckedSeatState != null) {
       return GestureDetector(
         onTapUp: (_) {
-          switch (seatState) {
-            case SeatState.selected:
-              {
-                setState(() {
-                  seatState = SeatState.unselected;
-                  widget.onSeatStateChanged(rowI, colI, SeatState.unselected);
-                });
-              }
-              break;
-            case SeatState.unselected:
-              {
-                setState(() {
-                  seatState = SeatState.selected;
-                  widget.onSeatStateChanged(rowI, colI, SeatState.selected);
-                });
-              }
-              break;
-            case SeatState.disabled:
-            case SeatState.sold:
-            case SeatState.empty:
-            default:
-              {}
-              break;
-          }
+          widget.onSeatStateChanged(rowI, colI, widget.model.seat);
+          setState(() { });
         },
-        child: seatState != SeatState.empty
+        child: widget.model.seat != SeatState.empty
             ? SvgPicture.asset(
-                _getSvgPath(safeCheckedSeatState),
+                _getSvgPath(widget.model.seat.status),
                 height: widget.model.seatSvgSize.toDouble(),
                 width: widget.model.seatSvgSize.toDouble(),
                 fit: BoxFit.cover,
@@ -74,13 +48,11 @@ class _SeatWidgetState extends State<SeatWidget> {
                 width: widget.model.seatSvgSize.toDouble(),
               ),
       );
-    }
-    return const SizedBox();
   }
 
   String _getSvgPath(SeatState state) {
     switch (state) {
-      case SeatState.unselected:
+      case SeatState.available:
         {
           return widget.model.pathUnSelectedSeat;
         }
@@ -95,6 +67,14 @@ class _SeatWidgetState extends State<SeatWidget> {
       case SeatState.sold:
         {
           return widget.model.pathSoldSeat;
+        }
+      case SeatState.sold:
+        {
+          return widget.model.pathSoldSeat;
+        }
+      case SeatState.onHold:
+        {
+          return widget.model.pathOnHoldSeat;
         }
       case SeatState.empty:
       default:

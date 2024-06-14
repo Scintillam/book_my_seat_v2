@@ -1,15 +1,14 @@
-import 'package:book_my_seat/src/model/seat_layout_state_model.dart';
-import 'package:book_my_seat/src/model/seat_model.dart';
-import 'package:book_my_seat/src/utils/seat_state.dart';
+import 'package:book_my_seat/book_my_seat.dart';
 import 'package:book_my_seat/src/widgets/seat_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:vive_models/vive_models.dart';
 
 class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
-  final void Function(int rowI, int colI, SeatState currentState)
+  final void Function(int rowI, int colI, SeatAvailability seat)
       onSeatStateChanged;
 
-  const SeatLayoutWidget({
+  SeatLayoutWidget({
     Key? key,
     required this.stateModel,
     required this.onSeatStateChanged,
@@ -22,33 +21,42 @@ class SeatLayoutWidget extends StatelessWidget {
       minScale: 0.8,
       boundaryMargin: const EdgeInsets.all(8),
       constrained: true,
+      panEnabled: false,
+      scaleEnabled: false,
       child: Column(
         children: [
           ...List<int>.generate(stateModel.rows, (rowI) => rowI)
               .map<Row>(
                 (rowI) => Row(
                   children: [
+                    SizedBox(
+                      width: 20,
+                      child: Text(
+                        (rowI+1).toString(),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(fontFamily: 'monospace'),
+                      ),
+                    ),
                     ...List<int>.generate(stateModel.cols, (colI) => colI)
                         .map<SeatWidget>((colI) => SeatWidget(
                               model: SeatModel(
-                                seatState: stateModel.currentSeatsState[rowI]
-                                    [colI],
+                                seat: stateModel.currentSeats[rowI][colI],
                                 rowI: rowI,
                                 colI: colI,
                                 seatSvgSize: stateModel.seatSvgSize,
                                 pathSelectedSeat: stateModel.pathSelectedSeat,
                                 pathDisabledSeat: stateModel.pathDisabledSeat,
                                 pathSoldSeat: stateModel.pathSoldSeat,
-                                pathUnSelectedSeat:
-                                    stateModel.pathUnSelectedSeat,
+                                pathUnSelectedSeat: stateModel.pathUnSelectedSeat,
+                                pathOnHoldSeat: stateModel.pathOnHoldSeat
                               ),
-                              onSeatStateChanged: onSeatStateChanged,
+                              onSeatStateChanged: onSeatStateChanged
                             ))
                         .toList()
                   ],
                 ),
               )
-              .toList()
+          .toList()
         ],
       ),
     );
