@@ -5,7 +5,7 @@ import 'package:vive_models/vive_models.dart';
 
 class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
-  final void Function(int rowI, int colI, SeatAvailability seat)
+  final Future<void> Function(int rowI, int colI, SeatAvailability seat)
       onSeatStateChanged;
 
   SeatLayoutWidget({
@@ -16,47 +16,74 @@ class SeatLayoutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-      maxScale: 5,
-      minScale: 0.8,
-      boundaryMargin: const EdgeInsets.all(8),
-      constrained: true,
-      panEnabled: false,
-      scaleEnabled: false,
-      child: Column(
+    return SingleChildScrollView(
+      primary: true,
+      scrollDirection: Axis.vertical,
+      child: Row(
         children: [
-          ...List<int>.generate(stateModel.rows, (rowI) => rowI)
-              .map<Row>(
-                (rowI) => Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: List<int>.generate(
+              stateModel.rows, (rowI) => rowI + 1).map<Widget>
+            (
+              (index) => 
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: stateModel.seatSvgSize.toDouble(),
+                  child: Text(
+                    (index).toString(),
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontFamily: 'monospace'),
+                  ),
+                )
+            ).toList()
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              primary: true,
+              scrollDirection: Axis.horizontal,
+              child: InteractiveViewer(
+                maxScale: 5,
+                minScale: 0.8,
+                boundaryMargin: const EdgeInsets.all(8),
+                constrained: true,
+                panEnabled: false,
+                scaleEnabled: false,
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: 20,
-                      child: Text(
-                        (rowI+1).toString(),
-                        textAlign: TextAlign.end,
-                        style: TextStyle(fontFamily: 'monospace'),
-                      ),
-                    ),
-                    ...List<int>.generate(stateModel.cols, (colI) => colI)
-                        .map<SeatWidget>((colI) => SeatWidget(
-                              model: SeatModel(
-                                seat: stateModel.currentSeats[rowI][colI],
-                                rowI: rowI,
-                                colI: colI,
-                                seatSvgSize: stateModel.seatSvgSize,
-                                pathSelectedSeat: stateModel.pathSelectedSeat,
-                                pathDisabledSeat: stateModel.pathDisabledSeat,
-                                pathSoldSeat: stateModel.pathSoldSeat,
-                                pathUnSelectedSeat: stateModel.pathUnSelectedSeat,
-                                pathOnHoldSeat: stateModel.pathOnHoldSeat
-                              ),
-                              onSeatStateChanged: onSeatStateChanged
-                            ))
-                        .toList()
+                    ...List<int>.generate(stateModel.rows, (rowI) => rowI)
+                        .map<Row>(
+                          (rowI) => Row(
+                            children: [
+                              ...List<int>.generate(stateModel.cols, (colI) => colI)
+                                  .map<Widget>(
+                                    (colI) => (colI > stateModel.currentSeats[rowI].length-1) ? Container() :
+                                    SeatWidget(
+                                        model: SeatModel(
+                                          seat: stateModel.currentSeats[rowI][colI],
+                                          rowI: rowI,
+                                          colI: colI,
+                                          seatSvgSize: stateModel.seatSvgSize,
+                                          pathSelectedSeat: stateModel.pathSelectedSeat,
+                                          pathDisabledSeat: stateModel.pathDisabledSeat,
+                                          pathSoldSeat: stateModel.pathSoldSeat,
+                                          pathUnSelectedSeat: stateModel.pathUnSelectedSeat,
+                                          pathOnHoldSeat: stateModel.pathOnHoldSeat,
+                                          pathOnBoughtSeat: stateModel.pathOnBoughtSeat
+                                        ),
+                                        onSeatStateChanged: onSeatStateChanged
+                                      ))
+                                  .toList()
+                            ],
+                          ),
+                        )
+                    .toList()
                   ],
                 ),
-              )
-          .toList()
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -11,6 +11,7 @@ class SeatModel extends Equatable {
   final String pathSoldSeat;
   final String pathDisabledSeat;
   final String pathOnHoldSeat;
+  final String pathOnBoughtSeat;
 
   const SeatModel({
     required this.seat,
@@ -22,6 +23,7 @@ class SeatModel extends Equatable {
     required this.pathSoldSeat,
     required this.pathUnSelectedSeat,
     required this.pathOnHoldSeat,
+    required this.pathOnBoughtSeat,
   });
 
   @override
@@ -35,5 +37,6 @@ class SeatModel extends Equatable {
         pathSoldSeat,
         pathUnSelectedSeat,
         pathOnHoldSeat,
+        pathOnBoughtSeat
       ];
 }

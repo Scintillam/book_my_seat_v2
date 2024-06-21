@@ -5,7 +5,7 @@ import 'package:vive_models/vive_models.dart';
 
 class SeatWidget extends StatefulWidget {
   final SeatModel model;
-  final void Function(int rowI, int colI, SeatAvailability currentSeat)
+  final Future<void> Function(int rowI, int colI, SeatAvailability currentSeat)
       onSeatStateChanged;
 
   SeatWidget({
@@ -32,17 +32,28 @@ class _SeatWidgetState extends State<SeatWidget> {
   @override
   Widget build(BuildContext context) {
       return GestureDetector(
-        onTapUp: (_) {
-          widget.onSeatStateChanged(rowI, colI, widget.model.seat);
-          setState(() { });
+        onTapUp: (_) async{
+          await widget.onSeatStateChanged(rowI, colI, widget.model.seat);
+          setState(() { 
+          });
         },
         child: widget.model.seat != SeatState.empty
-            ? SvgPicture.asset(
-                _getSvgPath(widget.model.seat.status),
-                height: widget.model.seatSvgSize.toDouble(),
-                width: widget.model.seatSvgSize.toDouble(),
-                fit: BoxFit.cover,
-              )
+            ? Stack(
+              alignment: Alignment.center,
+              children:[
+                SvgPicture.asset(
+                  _getSvgPath(widget.model.seat.status),
+                  height: widget.model.seatSvgSize.toDouble(),
+                  width: widget.model.seatSvgSize.toDouble(),
+                  fit: BoxFit.cover,
+                ),
+                Text(
+                  // (colI+1).toString(), 
+                  widget.model.seat.seat.seatNumber,
+                  style: TextStyle(fontFamily: 'monospace')
+                )
+              ] 
+            )
             : SizedBox(
                 height: widget.model.seatSvgSize.toDouble(),
                 width: widget.model.seatSvgSize.toDouble(),
@@ -75,6 +86,10 @@ class _SeatWidgetState extends State<SeatWidget> {
       case SeatState.onHold:
         {
           return widget.model.pathOnHoldSeat;
+        }
+      case SeatState.bought:
+        {
+          return widget.model.pathOnBoughtSeat;
         }
       case SeatState.empty:
       default:
