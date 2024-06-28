@@ -5,7 +5,7 @@ import 'package:vive_models/vive_models.dart';
 
 class SeatWidget extends StatefulWidget {
   final SeatModel model;
-  final Future<void> Function(int rowI, int colI, SeatAvailability currentSeat)
+  final Future<void> Function(int rowI, int colI, SeatAvailability currentSeat, TapUpDetails details)
       onSeatStateChanged;
 
   SeatWidget({
@@ -32,8 +32,8 @@ class _SeatWidgetState extends State<SeatWidget> {
   @override
   Widget build(BuildContext context) {
       return GestureDetector(
-        onTapUp: (_) async{
-          await widget.onSeatStateChanged(rowI, colI, widget.model.seat);
+        onTapUp: (details) async{
+          await widget.onSeatStateChanged(rowI, colI, widget.model.seat, details);
           setState(() { 
           });
         },
