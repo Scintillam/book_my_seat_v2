@@ -1,16 +1,19 @@
 import 'package:book_my_seat/book_my_seat.dart';
 import 'package:book_my_seat/src/widgets/seat_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:vive_models/vive_models.dart';
 
 class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
+  final TextStyle? textStyle;
   final Future<void> Function(int rowI, int colI, SeatAvailability seat, TapUpDetails details)
       onSeatStateChanged;
 
   SeatLayoutWidget({
     Key? key,
     required this.stateModel,
+    required this.textStyle,
     required this.onSeatStateChanged,
   }) : super(key: key);
 
@@ -55,12 +58,13 @@ class SeatLayoutWidget extends StatelessWidget {
                   panEnabled: false,
                   scaleEnabled: false,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          width: stateModel.seatSvgSize * stateModel.cols.toDouble() - 50,
-                          height: 20,
-                          color: Colors.pink,
-                          child: Center(child: Text('Escenario')),
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: 40,
+                          color: Color(0xffeb3d8c),
+                          child: Center(child: Text('Escenario', style: textStyle,)),
                         ),
                       ...List<int>.generate(stateModel.rows, (rowI) => rowI)
                           .map<Row>(

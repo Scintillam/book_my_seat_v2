@@ -22,17 +22,38 @@ class LegendWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Wrap(
-        spacing: 15,
-        children: [
-          buildItem(pathSoldSeat, 'Vendida'),
-          buildItem(pathUnSelectedSeat, 'Disponible'),
-          buildItem(pathSelectedSeat, 'Seleccionada por ti'),
-          buildItem(pathOnBoughtSeat, 'Comprada por ti'),
-          buildItem(pathDisabledSeat, 'Deshabilitada'),
-          // buildItem(pathOnHoldSeat, 'onHold'),
-        ],
+      padding: EdgeInsets.only(top: 10),
+      child: Container(
+        alignment: Alignment.center,
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey.withAlpha(50),
+        ),
+        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              Colors.grey.withAlpha(50),
+              //Colors.black.withAlpha(50),
+              Colors.black.withAlpha(100)
+            ])),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Wrap(
+            spacing: 15,
+            children: [
+              buildItem(pathSoldSeat, 'Reservado'),
+              buildItem(pathUnSelectedSeat, 'Disponible'),
+              buildItem(pathSelectedSeat, 'Seleccionado por ti'),
+              buildItem(pathOnBoughtSeat, 'Comprado por ti'),
+              // buildItem(pathDisabledSeat, 'Deshabilitada'),
+              // buildItem(pathOnHoldSeat, 'onHold'),
+            ],
+          ),
+        ),
       ),
     );
   }
