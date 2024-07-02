@@ -7,11 +7,13 @@ class SeatWidget extends StatefulWidget {
   final SeatModel model;
   final Future<void> Function(int rowI, int colI, SeatAvailability currentSeat, TapUpDetails details)
       onSeatStateChanged;
+  final TextStyle? textStyle;
 
   SeatWidget({
     Key? key,
     required this.model,
     required this.onSeatStateChanged,
+    this.textStyle,
   }) : super(key: key);
 
   @override
@@ -50,7 +52,7 @@ class _SeatWidgetState extends State<SeatWidget> {
                 Text(
                   // (colI+1).toString(), 
                   widget.model.seat.seat.seatNumber,
-                  style: TextStyle(fontFamily: 'monospace')
+                  style: widget.textStyle ?? TextStyle(fontFamily: 'monospace')
                 )
               ] 
             )

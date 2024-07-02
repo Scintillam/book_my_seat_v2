@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vive_models/vive_models.dart';
 
+const double scenarioHeight = 40;
+
 class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
-  final TextStyle? textStyle;
+  final TextStyle? stageStyle;
+  final TextStyle? numberStyle;
   final Future<void> Function(int rowI, int colI, SeatAvailability seat, TapUpDetails details)
       onSeatStateChanged;
 
   SeatLayoutWidget({
     Key? key,
     required this.stateModel,
-    required this.textStyle,
+    this.stageStyle,
+    this.numberStyle,
     required this.onSeatStateChanged,
   }) : super(key: key);
 
@@ -26,7 +30,7 @@ class SeatLayoutWidget extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: scenarioHeight),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: List<int>.generate(
@@ -35,12 +39,12 @@ class SeatLayoutWidget extends StatelessWidget {
                   (index) => 
                     Container(
                       alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.only(right: 10),
                       height: stateModel.seatSvgSize.toDouble(),
                       child: Text(
                         (index).toString(),
                         textAlign: TextAlign.left,
-                        style: const TextStyle(fontFamily: 'monospace'),
+                        style: stageStyle ?? TextStyle(fontFamily: 'monospace'),
                       ),
                     )
                 ).toList()
@@ -62,9 +66,9 @@ class SeatLayoutWidget extends StatelessWidget {
                     children: [
                       Container(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          height: 40,
+                          height: scenarioHeight,
                           color: Color(0xffeb3d8c),
-                          child: Center(child: Text('Escenario', style: textStyle,)),
+                          child: Center(child: Text('Escenario', style: stageStyle ?? TextStyle(fontFamily: 'monospace'))),
                         ),
                       ...List<int>.generate(stateModel.rows, (rowI) => rowI)
                           .map<Row>(
@@ -75,6 +79,7 @@ class SeatLayoutWidget extends StatelessWidget {
                                       (colI) => (colI > stateModel.currentSeats[rowI].length-1) ? 
                                       SizedBox(width: stateModel.seatSvgSize.toDouble(), height: stateModel.seatSvgSize.toDouble()) 
                                       : SeatWidget(
+                                          textStyle: numberStyle,
                                           model: SeatModel(
                                             seat: stateModel.currentSeats[rowI][colI],
                                             rowI: rowI,

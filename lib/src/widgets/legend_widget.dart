@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LegendWidget extends StatelessWidget {
@@ -10,6 +9,8 @@ class LegendWidget extends StatelessWidget {
   final String pathOnHoldSeat;
   final String pathOnBoughtSeat;
 
+  final TextStyle? textStyle;
+
   LegendWidget({
     required this.pathSelectedSeat,
     required this.pathDisabledSeat,
@@ -17,6 +18,7 @@ class LegendWidget extends StatelessWidget {
     required this.pathUnSelectedSeat,
     required this.pathOnHoldSeat,
     required this.pathOnBoughtSeat,
+    this.textStyle
   });
   
   @override
@@ -26,7 +28,6 @@ class LegendWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey.withAlpha(50),
@@ -66,7 +67,7 @@ class LegendWidget extends StatelessWidget {
           width: 15,
           height: 15,
         ),
-        Text(text),
+        Text(text, style: textStyle),
       ],
     );
   }
