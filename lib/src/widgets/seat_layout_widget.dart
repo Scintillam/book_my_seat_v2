@@ -10,7 +10,7 @@ class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
   final TextStyle? stageStyle;
   final TextStyle? numberStyle;
-  final Future<void> Function(int rowI, int colI, SeatAvailability seat, TapUpDetails details)
+  final Future<void> Function(SeatAvailability seat, TapUpDetails details)
       onSeatStateChanged;
 
   SeatLayoutWidget({
@@ -94,11 +94,9 @@ class SeatLayoutWidget extends StatelessWidget {
                                           ),
                                           onSeatStateChanged: onSeatStateChanged
                                         ))
-                                    .toList()
                               ],
                             ),
                           )
-                      .toList()
                     ],
                   ),
                 ),
