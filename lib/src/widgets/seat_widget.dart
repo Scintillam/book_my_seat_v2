@@ -41,8 +41,8 @@ class _SeatWidgetState extends State<SeatWidget> {
   }
 
   Widget buildSeat() {
-    print("BUILDING SEAT WIDGET3 " + DateTime.now().toString());
-    return widget.model.seat != SeatState.empty
+    // print("BUILDING SEAT WIDGET3 " + DateTime.now().toString());
+    return widget.model.seat.status != SeatState.empty
         ? Stack(alignment: Alignment.center, children: [
             SvgPicture.asset(
               _getSvgPath(widget.model.seat.status),
@@ -51,7 +51,7 @@ class _SeatWidgetState extends State<SeatWidget> {
               fit: BoxFit.cover,
             ),
             Text(widget.model.seat.seat.seatNumber,
-                style: widget.textStyle ?? TextStyle(fontFamily: 'monospace'))
+                style: widget.textStyle ?? const TextStyle(fontFamily: 'monospace'))
           ])
         : SizedBox(
             height: widget.model.seatSvgSize.toDouble(),
@@ -73,9 +73,9 @@ class _SeatWidgetState extends State<SeatWidget> {
         {
           return widget.model.pathDisabledSeat;
         }
-      case SeatState.sold:
+      case SeatState.comingSoon:
         {
-          return widget.model.pathSoldSeat;
+          return widget.model.pathComingSoon;
         }
       case SeatState.sold:
         {

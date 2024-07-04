@@ -8,23 +8,25 @@ class LegendWidget extends StatelessWidget {
   final String pathDisabledSeat;
   final String pathOnHoldSeat;
   final String pathOnBoughtSeat;
+  final String pathComingSoon;
 
   final TextStyle? textStyle;
 
-  LegendWidget({
+  const LegendWidget({Key? key, 
     required this.pathSelectedSeat,
     required this.pathDisabledSeat,
     required this.pathSoldSeat,
     required this.pathUnSelectedSeat,
     required this.pathOnHoldSeat,
     required this.pathOnBoughtSeat,
+    required this.pathComingSoon,
     this.textStyle
-  });
+  }) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 10),
       child: Container(
         alignment: Alignment.center,
         height: 100,
@@ -50,7 +52,8 @@ class LegendWidget extends StatelessWidget {
               buildItem(pathUnSelectedSeat, 'Disponible'),
               buildItem(pathSelectedSeat, 'Seleccionado por ti'),
               buildItem(pathOnBoughtSeat, 'Comprado por ti'),
-              // buildItem(pathDisabledSeat, 'Deshabilitada'),
+              buildItem(pathComingSoon, 'Proximamente...'),
+              buildItem(pathDisabledSeat, 'Deshabilitado'),
               // buildItem(pathOnHoldSeat, 'onHold'),
             ],
           ),

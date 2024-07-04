@@ -12,6 +12,7 @@ class SeatLayoutStateModel extends Equatable {
   final String pathDisabledSeat;
   final String pathOnHoldSeat;
   final String pathOnBoughtSeat;
+  final String pathComingSoon;
 
   const SeatLayoutStateModel({
     required this.rows,
@@ -24,6 +25,7 @@ class SeatLayoutStateModel extends Equatable {
     required this.pathUnSelectedSeat,
     required this.pathOnHoldSeat,
     required this.pathOnBoughtSeat,
+    required this.pathComingSoon,
   });
 
   @override
