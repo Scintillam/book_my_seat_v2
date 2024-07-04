@@ -8,16 +8,18 @@ const double scenarioHeight = 40;
 
 class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
-  final TextStyle? stageStyle;
+  final TextStyle? titleStyle;
   final TextStyle? numberStyle;
+  final String title;
   final Future<void> Function(SeatAvailability seat, TapUpDetails details)
       onSeatStateChanged;
 
   SeatLayoutWidget({
     Key? key,
     required this.stateModel,
-    this.stageStyle,
+    this.titleStyle,
     this.numberStyle,
+    required this.title,
     required this.onSeatStateChanged,
   }) : super(key: key);
 
@@ -43,7 +45,7 @@ class SeatLayoutWidget extends StatelessWidget {
                                 child: Text(
                                   (index).toString(),
                                   textAlign: TextAlign.left,
-                                  style: stageStyle ??
+                                  style: titleStyle ??
                                       TextStyle(fontFamily: 'monospace'),
                                 ),
                               ))
@@ -68,8 +70,8 @@ class SeatLayoutWidget extends StatelessWidget {
                         height: scenarioHeight,
                         color: Color(0xffeb3d8c),
                         child: Center(
-                            child: Text('Escenario',
-                                style: stageStyle ??
+                            child: Text(title,
+                                style: titleStyle ??
                                     TextStyle(fontFamily: 'monospace'))),
                       ),
                       ...List<int>.generate(stateModel.rows, (rowI) => rowI)
