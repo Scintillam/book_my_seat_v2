@@ -23,8 +23,9 @@ class SeatLayoutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("BUILDING LAYOUT WIDGET");
     return Expanded(
-      child: SingleChildScrollView(
+      child:  SingleChildScrollView(
         primary: true,
         scrollDirection: Axis.vertical,
         child: Row(
@@ -32,23 +33,21 @@ class SeatLayoutWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: scenarioHeight),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: List<int>.generate(
-                  stateModel.rows, (rowI) => rowI + 1).map<Widget>
-                (
-                  (index) => 
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.only(right: 10),
-                      height: stateModel.seatSvgSize.toDouble(),
-                      child: Text(
-                        (index).toString(),
-                        textAlign: TextAlign.left,
-                        style: stageStyle ?? TextStyle(fontFamily: 'monospace'),
-                      ),
-                    )
-                ).toList()
-              ),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:
+                      List<int>.generate(stateModel.rows, (rowI) => rowI + 1)
+                          .map<Widget>((index) => Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.only(right: 10),
+                                height: stateModel.seatSvgSize.toDouble(),
+                                child: Text(
+                                  (index).toString(),
+                                  textAlign: TextAlign.left,
+                                  style: stageStyle ??
+                                      TextStyle(fontFamily: 'monospace'),
+                                ),
+                              ))
+                          .toList()),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -65,38 +64,46 @@ class SeatLayoutWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: scenarioHeight,
-                          color: Color(0xffeb3d8c),
-                          child: Center(child: Text('Escenario', style: stageStyle ?? TextStyle(fontFamily: 'monospace'))),
-                        ),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: scenarioHeight,
+                        color: Color(0xffeb3d8c),
+                        child: Center(
+                            child: Text('Escenario',
+                                style: stageStyle ??
+                                    TextStyle(fontFamily: 'monospace'))),
+                      ),
                       ...List<int>.generate(stateModel.rows, (rowI) => rowI)
                           .map<Row>(
-                            (rowI) => Row(
-                              children: [
-                                ...List<int>.generate(stateModel.cols, (colI) => colI)
-                                    .map<Widget>(
-                                      (colI) => (colI > stateModel.currentSeats[rowI].length-1) ? 
-                                      SizedBox(width: stateModel.seatSvgSize.toDouble(), height: stateModel.seatSvgSize.toDouble()) 
-                                      : SeatWidget(
-                                          textStyle: numberStyle,
-                                          model: SeatModel(
-                                            seat: stateModel.currentSeats[rowI][colI],
-                                            rowI: rowI,
-                                            colI: colI,
-                                            seatSvgSize: stateModel.seatSvgSize,
-                                            pathSelectedSeat: stateModel.pathSelectedSeat,
-                                            pathDisabledSeat: stateModel.pathDisabledSeat,
-                                            pathSoldSeat: stateModel.pathSoldSeat,
-                                            pathUnSelectedSeat: stateModel.pathUnSelectedSeat,
-                                            pathOnHoldSeat: stateModel.pathOnHoldSeat,
-                                            pathOnBoughtSeat: stateModel.pathOnBoughtSeat
-                                          ),
-                                          onSeatStateChanged: onSeatStateChanged
-                                        ))
-                              ],
-                            ),
-                          )
+                        (rowI) => Row(
+                          children: [
+                            ...List<int>.generate(stateModel.cols,
+                                (colI) => colI).map<Widget>((colI) => (colI >
+                                    stateModel.currentSeats[rowI].length - 1)
+                                ? SizedBox(
+                                    width: stateModel.seatSvgSize.toDouble(),
+                                    height: stateModel.seatSvgSize.toDouble())
+                                : SeatWidget(
+                                    key: ValueKey('seat_${rowI}_$colI'),
+                                    textStyle: numberStyle,
+                                    model: SeatModel(
+                                        seat: stateModel.currentSeats[rowI]
+                                            [colI],
+                                        rowI: rowI,
+                                        colI: colI,
+                                        seatSvgSize: stateModel.seatSvgSize,
+                                        pathSelectedSeat:
+                                            stateModel.pathSelectedSeat,
+                                        pathDisabledSeat:
+                                            stateModel.pathDisabledSeat,
+                                        pathSoldSeat: stateModel.pathSoldSeat,
+                                        pathUnSelectedSeat:
+                                            stateModel.pathUnSelectedSeat,
+                                        pathOnHoldSeat: stateModel.pathOnHoldSeat,
+                                        pathOnBoughtSeat: stateModel.pathOnBoughtSeat),
+                                    onSeatStateChanged: onSeatStateChanged))
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
