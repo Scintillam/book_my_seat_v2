@@ -9,6 +9,7 @@ const double scenarioHeight = 40;
 class SeatLayoutWidget extends StatelessWidget {
   final SeatLayoutStateModel stateModel;
   final TextStyle? titleStyle;
+  final List<String> rowNames;
   final TextStyle? numberStyle;
   final String title;
   final Future<void> Function(SeatAvailability seat, TapUpDetails details)
@@ -20,6 +21,7 @@ class SeatLayoutWidget extends StatelessWidget {
     this.titleStyle,
     this.numberStyle,
     required this.title,
+    required this.rowNames,
     required this.onSeatStateChanged,
   }) : super(key: key);
 
@@ -37,13 +39,12 @@ class SeatLayoutWidget extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:
-                      List<int>.generate(stateModel.rows, (rowI) => rowI + 1)
-                          .map<Widget>((index) => Container(
+                      rowNames.map<Widget>((row) => Container(
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.only(right: 10),
                                 height: stateModel.seatSvgSize.toDouble(),
                                 child: Text(
-                                  (index).toString(),
+                                  (row).toString(),
                                   textAlign: TextAlign.left,
                                   style: titleStyle ??
                                       const TextStyle(fontFamily: 'monospace'),
