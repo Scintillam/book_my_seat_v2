@@ -25,7 +25,7 @@ class SeatLayoutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("BUILDING LAYOUT WIDGET");
+    // print("BUILDING LAYOUT WIDGET");
     return Expanded(
       child:  SingleChildScrollView(
         primary: true,
@@ -33,7 +33,7 @@ class SeatLayoutWidget extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: scenarioHeight),
+              padding: const EdgeInsets.only(top: scenarioHeight),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:
@@ -46,7 +46,7 @@ class SeatLayoutWidget extends StatelessWidget {
                                   (index).toString(),
                                   textAlign: TextAlign.left,
                                   style: titleStyle ??
-                                      TextStyle(fontFamily: 'monospace'),
+                                      const TextStyle(fontFamily: 'monospace'),
                                 ),
                               ))
                           .toList()),
@@ -68,11 +68,11 @@ class SeatLayoutWidget extends StatelessWidget {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: scenarioHeight,
-                        color: Color(0xffeb3d8c),
+                        color: const Color(0xffeb3d8c),
                         child: Center(
                             child: Text(title,
                                 style: titleStyle ??
-                                    TextStyle(fontFamily: 'monospace'))),
+                                    const TextStyle(fontFamily: 'monospace'))),
                       ),
                       ...List<int>.generate(stateModel.rows, (rowI) => rowI)
                           .map<Row>(

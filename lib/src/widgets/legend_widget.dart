@@ -29,7 +29,7 @@ class LegendWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: Container(
         alignment: Alignment.center,
-        height: 100,
+        height: 150,
         decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey.withAlpha(50),
@@ -70,7 +70,11 @@ class LegendWidget extends StatelessWidget {
           width: 15,
           height: 15,
         ),
-        Text(text, style: textStyle),
+        Text(
+          text, 
+          textScaler: const TextScaler.linear(1),
+          style: textStyle
+        ),
       ],
     );
   }
