@@ -2,6 +2,7 @@ name: book_my_seat
 description: This is a flutter package to create seat booking layout for bus, theatre, aeroplane etc.
 version: 1.0.1
 homepage: https://github.com/SharmaPrateek196/book_my_seat
+publish_to: 'none'
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -12,7 +13,18 @@ dependencies:
     sdk: flutter
   equatable: ^2.0.5
   flutter_svg: ^1.0.2
+  vive_models:
+    #path: ../vive_models-dev
+    git:
+      url: git@github.com:Scintillam/vive_models.git
+      ref: 1.0.2
 
 dev_dependencies:
-
+  flutter_test:
+   sdk: flutter
+  #lints: ^2.0.0
+  flutter_lints: ^3.0.1
+  test: ^1.21.0
+  flutter_localizations:
+    sdk: flutter
 flutter:

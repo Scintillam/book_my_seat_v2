@@ -1,8 +1,8 @@
-import 'package:book_my_seat/src/utils/seat_state.dart';
 import 'package:equatable/equatable.dart';
+import 'package:vive_models/vive_models.dart';
 
 class SeatModel extends Equatable {
-  final SeatState seatState;
+  final SeatAvailability seat;
   final int rowI;
   final int colI;
   final int seatSvgSize;
@@ -10,9 +10,12 @@ class SeatModel extends Equatable {
   final String pathUnSelectedSeat;
   final String pathSoldSeat;
   final String pathDisabledSeat;
+  final String pathOnHoldSeat;
+  final String pathOnBoughtSeat;
+  final String pathComingSoon;
 
   const SeatModel({
-    required this.seatState,
+    required this.seat,
     required this.rowI,
     required this.colI,
     this.seatSvgSize = 50,
@@ -20,11 +23,14 @@ class SeatModel extends Equatable {
     required this.pathDisabledSeat,
     required this.pathSoldSeat,
     required this.pathUnSelectedSeat,
+    required this.pathOnHoldSeat,
+    required this.pathOnBoughtSeat,
+    required this.pathComingSoon
   });
 
   @override
   List<Object?> get props => [
-        seatState,
+        seat,
         rowI,
         colI,
         seatSvgSize,
@@ -32,5 +38,8 @@ class SeatModel extends Equatable {
         pathDisabledSeat,
         pathSoldSeat,
         pathUnSelectedSeat,
+        pathOnHoldSeat,
+        pathOnBoughtSeat,
+        pathComingSoon
       ];
 }
