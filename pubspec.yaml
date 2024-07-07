@@ -14,10 +14,10 @@ dependencies:
   equatable: ^2.0.5
   flutter_svg: ^1.0.2
   vive_models:
-    path: ../vive_models-dev
-    #git:
-    #  url: git@github.com:Scintillam/vive_models.git
-    #  ref: 1.0.1
+    #path: ../vive_models-dev
+    git:
+      url: git@github.com:Scintillam/vive_models.git
+      ref: 1.0.2
 
 dev_dependencies:
   flutter_test:
