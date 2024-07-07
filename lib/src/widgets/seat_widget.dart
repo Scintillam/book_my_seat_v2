@@ -44,14 +44,23 @@ class _SeatWidgetState extends State<SeatWidget> {
     // print("BUILDING SEAT WIDGET3 " + DateTime.now().toString());
     return widget.model.seat.status != SeatState.empty
         ? Stack(alignment: Alignment.center, children: [
-            SvgPicture.asset(
+            /*SvgPicture.asset(
               _getSvgPath(widget.model.seat.status),
               height: widget.model.seatSvgSize.toDouble(),
               width: widget.model.seatSvgSize.toDouble(),
               fit: BoxFit.cover,
-            ),
+            ),*/
+
+            Padding(
+                padding: const EdgeInsets.all(3),
+                child: Container(
+                  height: widget.model.seatSvgSize.toDouble() - 6,
+                  width: widget.model.seatSvgSize.toDouble() - 6,
+                  decoration: _getSeatColor(widget.model.seat.status),
+                )),
             Text(widget.model.seat.seat.seatNumber,
-                style: widget.textStyle ?? const TextStyle(fontFamily: 'monospace'))
+                style: widget.textStyle ??
+                    const TextStyle(fontFamily: 'monospace'))
           ])
         : SizedBox(
             height: widget.model.seatSvgSize.toDouble(),
@@ -93,6 +102,77 @@ class _SeatWidgetState extends State<SeatWidget> {
       default:
         {
           return widget.model.pathDisabledSeat;
+        }
+    }
+  }
+
+  BoxDecoration _getSeatColor(SeatState state) {
+    switch (state) {
+      case SeatState.available:
+        {
+          return BoxDecoration(
+              border: Border.all(
+                color: const Color(0xFF05F995),
+                width: 3,
+              ),
+              borderRadius: BorderRadius.circular(3));
+        }
+      case SeatState.selected:
+        {
+          return BoxDecoration(
+            color: const Color(0xFFeb3d8c),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
+        }
+      case SeatState.disabled:
+        {
+          return BoxDecoration(
+            color: const Color(0xFF636366),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
+        }
+      case SeatState.comingSoon:
+        {
+          return BoxDecoration(
+            color: const Color(0xFF9e9e9e),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
+        }
+      case SeatState.sold:
+        {
+          return BoxDecoration(
+            color: const Color(0xFFfeba4a),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
+        }
+      case SeatState.onHold:
+        {
+          return BoxDecoration(
+            color: const Color(0xfffeba4a),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
+        }
+      case SeatState.bought:
+        {
+          return BoxDecoration(
+            color: const Color(0xFF05cbf9),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
+        }
+      case SeatState.empty:
+      default:
+        {
+          return BoxDecoration(
+            color: const Color(0xFF636366),
+            borderRadius:
+                BorderRadius.circular(3), // Rounded corners with radius 3
+          );
         }
     }
   }
