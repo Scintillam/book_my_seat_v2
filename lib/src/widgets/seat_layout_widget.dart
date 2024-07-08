@@ -65,14 +65,17 @@ class SeatLayoutWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: scenarioHeight,
-                      color: const Color(0xffeb3d8c),
-                      child: Center(
-                          child: Text(title,
-                              style: titleStyle ??
-                                  const TextStyle(fontFamily: 'monospace'))),
+                    Padding(
+                      padding: EdgeInsets.only(left: 3.5 * stateModel.seatSvgSize.toDouble()),
+                      child: Container(
+                        width: stateModel.seatSvgSize * 20.5,
+                        height: scenarioHeight,
+                        color: const Color(0xffeb3d8c),
+                        child: Center(
+                            child: Text(title,
+                                style: titleStyle ??
+                                    const TextStyle(fontFamily: 'monospace'))),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
