@@ -16,9 +16,10 @@ dependencies:
   vive_models:
     #path: ../vive_models-dev
     #path: /Users/pablo/psb/vive/pub_repo/vive_models
-    git:
-      url: git@github.com:Scintillam/vive_models.git
-      ref: 1.0.4
+    #git: git@github.com:Scintillam/vive_models.git
+     git:
+       url: git@github.com:Scintillam/vive_models.git
+       ref: 1.0.5
 
 dev_dependencies:
   flutter_test:
@@ -28,4 +29,3 @@ dev_dependencies:
   test: ^1.21.0
   flutter_localizations:
     sdk: flutter
-flutter:
